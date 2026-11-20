@@ -1,0 +1,34 @@
+name: Reusable dependency review
+on:
+  workflow_call:
+    inputs:
+      fail-on-severity:
+        description: Minimum severity that fails the review
+        type: string
+        default: high
+      comment-summary-in-pr:
+        description: PR summary policy (always, on-failure, never)
+        type: string
+        default: always
+permissions:
+  contents: read
+jobs:
+  dependency-review:
+    name: Review changed dependencies
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      # Uses only GitHub's comparison API; never checks out or executes PR code.
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec # v5.0.1
+        with:
+          fail-on-severity: ${{ inputs.fail-on-severity }}
+          fail-on-scopes: runtime, development, unknown
+          license-check: false
+          comment-summary-in-pr: ${{ inputs.comment-summary-in-pr }}
+          show-openssf-scorecard: false
+          retry-on-snapshot-warnings: true
+          retry-on-snapshot-warnings-timeout: 120
