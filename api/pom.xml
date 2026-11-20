@@ -13,13 +13,6 @@
     <description>API project for Stock Management</description>
 
     <dependencies>
-        <!-- FORK PILOT ONLY: deliberately vulnerable; removed after CI evidence. -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-            <version>1.9</version>
-            <scope>test</scope>
-        </dependency>
         <!-- Begin OpenMRS core -->
 
         <dependency>
